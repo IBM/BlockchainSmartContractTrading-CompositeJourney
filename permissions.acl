@@ -1,0 +1,35 @@
+/**
+ * Access Control List for the bidding network.
+ */
+rule Seller {
+    description: "Allow the seller full access"
+    participant: "org.acme.product.auction.Seller"
+    operation: ALL
+    resource: "org.acme.product.auction.*"
+    action: ALLOW
+}
+
+rule Member {
+    description: "Allow the member read access"
+    participant: "org.acme.product.auction.Member"
+    operation: READ
+    resource: "org.acme.product.auction.*"
+    action: ALLOW
+}
+
+rule ProductListingOwner {
+    description: "Allow the owner of a product total access to their listing"
+    participant(m): "org.acme.product.auction.Seller"
+    operation: ALL
+    resource(v): "org.acme.product.auction.ProductListing"
+    condition: (v.owner.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
