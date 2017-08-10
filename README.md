@@ -1,6 +1,6 @@
 # Bidding Platform
 
-This is an interactive, distributed, product auction demo. List assets for sale (setting a reserve price), and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction.
+This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price), and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction.
 
 This business network defines:
 
@@ -21,16 +21,14 @@ The `makeOffer` function is called when an `Offer` transaction is submitted. The
 
 The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sorts the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
 
-### Prerequisites and setup:
+You can determine which users/roles are permitted to create, read, update or delete elements in a business network's domain model with help of ACL rules in `permissions.acl` file .
 
-* [Docker](https://www.docker.com/products/overview) - v1.12 or higher
-* [Docker Compose](https://docs.docker.com/compose/overview/) - v1.8 or higher
-* [Git client](https://git-scm.com/downloads) - needed for clone commands
-* [Node.js & npm](https://nodejs.org/en/download/) - node v6.2.0 - v6.10.0 (v7+ not supported); npm comes with your node installation.
-*  git - 2.9.x
-*  Python - 2.7.x
+## Steps
+1. [Generate the Business Network Archive (BNA)](#1-generate-the-business-network-archive-bna)
+2. [Deploy the Business Network Archive using Composer Playground](#2-deploy-the-business-network-archive-using-composer-playground)
+3. [Deploy the Business Network Archive on Hyperledger Composer running locally](#3-deploy-the-business-network-archive-on-hyperledger-composer-running-locally)
 
-### Generate the Business Network Archive
+## 1. Generate the Business Network Archive (BNA)
 
 To check that the structure of the files is valid, you can now generate a Business Network Archive (BNA) file for your business network definition. The BNA file is the deployable unit -- a file that can be deployed to the Composer runtime for execution.
 
@@ -59,12 +57,12 @@ Command succeeded
 ```
 The `composer archive create` command has created a file called `product-auction.bna` in the `dist` folder.
 
-You can test the business network definition against the embedded runtime that stores the state of 'the blockchain' in-memory in a Node.js process. This embedded runtime is very useful for unit testing, as it allows you to focus on testing the business logic rather than configuring an entire Fabric.
-From your project working directory (product-auction), open the file test/productAuction.js and run the following command:
+You can test the business network definition against the embedded runtime that stores the state of 'the blockchain' in-memory in a Node.js process.
+From your project working directory, open the file test/productAuction.js and run the following command:
 ```
 npm test
 ```
-You should see the following output : 
+You should see the following output :
 ```
 > product-auction@0.0.1 test /Users/ishan/Documents/git-demo/BlockchainBalanceTransfer-CompositeJourney
 > mocha --recursive
@@ -79,13 +77,11 @@ You should see the following output :
 
   4 passing (2s)
 ```
-### Deploy the Business Network Archive
 
-#### Deploy using Composer Playground
+## 2. Deploy the Business Network Archive using Composer Playground
+
 Open [Composer Playground](http://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
 If you have previously used Playground, be sure to clear your browser local storage by running `localStorage.clear()` in your browser Console. Now import the `product-auction.bna` file and click on deploy button.
-
->You can also setup [Composer Playground locally](https://hyperledger.github.io/composer/installing/using-playground-locally.html).
 
 To test this Business Network Definition in the **Test** tab:
 
@@ -96,7 +92,7 @@ In the `Seller` participant registry, create a new participant.
   "$class": "org.acme.product.auction.Seller",
   "organisation": "ACME",
   "email": "auction@acme.org",
-  "balance": 237.508,
+  "balance": 100,
   "products": []
 }
 ```
@@ -125,6 +121,21 @@ In the `Member` participant registry, create two participants.
 }
 ```
 
+Click on `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
+Please following the instructions as shown in the images below:
+
+![Admin Tab](images/admintab.png)
+
+![Generate New Id](images/generateNewId.png)
+
+![Add to Wallet](images/addtowallet.png)
+
+![Ids to Wallet](images/idstowallet.png)
+
+Select the `seller id` from the `Wallet tab` tab. Now click on `test tab` perform Seller transactions such as `AddProduct` and `StartBidding`.
+
+![Select Id](images/selectid.png)
+
 Now click on `Submit Transaction` and select `AddProduct` transaction from the dropdown, to create a product for the seller.
 ```
 {
@@ -135,28 +146,27 @@ Now click on `Submit Transaction` and select `AddProduct` transaction from the d
 ```
 You can verify the transaction by checking the product and seller registry.
 
-To create a product listing for the above product, copy the `ProductID`. Then submit `StartBidding` transaction.
+To create a product listing for the above product, copy the `ProductID` from the product registry. Then submit `StartBidding` transaction.
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
-  "reservePrice": 200,
-  "product": "resource:org.acme.product.auction.Product#<ProductID>",
-  "owner": "resource:org.acme.product.auction.Seller#auction@acme.org"
+  "reservePrice": 50,
+  "product": "resource:org.acme.product.auction.Product#<ProductID>"
 }
 ```
-You've just listed `Sample Product` for auction, with a reserve price of 200!
+
+You've just listed `Sample Product` for auction, with a reserve price of 50!
 A listing has been created in `ProductListing` registry for the product with `FOR_SALE` state.
 
 Now Member participants can submit `Offer` transactions to bid on a product listing.
 
-Submit an `Offer` transaction, by submitting a transaction and selecting `Offer` from the dropdown.
-
+For each `member id`, select the user id from the `Wallet tab`. Now click on `test tab` to submit an `Offer` transaction.
 > `ListingID` is the id of the listing copied from the `ProductListing` registry.
 
 ```
 {
   "$class": "org.acme.product.auction.Offer",
-  "bidPrice": 300,
+  "bidPrice": 50,
   "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>",
   "member": "resource:org.acme.product.auction.Member#memberA@acme.org"
 }
@@ -165,20 +175,22 @@ Submit an `Offer` transaction, by submitting a transaction and selecting `Offer`
 ```
 {
   "$class": "org.acme.product.auction.Offer",
-  "bidPrice": 500,
+  "bidPrice": 100,
   "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>",
   "member": "resource:org.acme.product.auction.Member#memberB@acme.org"
 }
 ```
+
 You can check the `ProductListing` registry, to view all the bids for the product.
 
-To end the auction submit a `CloseBidding` transaction for the listing.
+![Product Offers](images/productoffers.png)
+
+Now again select the `seller id` from the `Wallet tab` tab. Now click on `test tab` to end the auction by submitting a `CloseBidding` transaction for the listing.
 
 ```
 {
   "$class": "org.acme.vehicle.auction.CloseBidding",
-  "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>",
-  "owner": "resource:org.acme.product.auction.Seller#auction@acme.org"
+  "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>"
 }
 ```
 
@@ -186,51 +198,24 @@ This simply indicates that the auction for `ListingID` is now closed, triggering
 
 To see the Product was sold you need to click on the `ProductListing` asset registry to check the owner of the product. The highest bid is placed by owner `memberB@acme.org` so you should see the owner of the product is now `memberB@acme.org`.
 
+![New Owner of Product](images/newowner.png)
+
 If you check the state of the ProductListing with `ListingID` is `SOLD`.
 
-If you click on the `Member` asset registry you can check the balance of each User. You should see that the balance of the buyer `memberB@acme.org` has been debited by `500`, whilst the balance of the seller `auction@acme.org` has been credited with `500`. Also the product list of the buyer `memberB@acme.org` is updated.
+![Product Listing Sold](images/soldlisting.png)
 
-#### Develop on Hyperledger Composer running locally
+If you click on the `Member` asset registry you can check the balance of each User. You should see that the balance of the buyer `memberB@acme.org` has been debited by `100`, whilst the balance of the seller `auction@acme.org` has been credited with `100`. Also the product list of the buyer `memberB@acme.org` is updated.
 
-#### a) Installing Hyperledger Composer development tools
+You can view history of all transactions by selecting the `All transactions` tab.
 
-* The `composer-cli` contains all the command line operations for developing business networks. To install `composer-cli` run the following command:
-```
-npm install -g composer-cli
-```
+![Transaction History](images/transactions.png)
 
-* The `generator-hyperledger-composer` is a Yeoman plugin that creates bespoke applications for your business network. To install `generator-hyperledger-composer` run the following command:
-```
-npm install -g generator-hyperledger-composer
-```
+> You can also use the default `System user` to perform all the actions as we have a rule in `permissions.acl` to permit all access `System user`.
 
-* The `composer-rest-server` uses the Hyperledger Composer LoopBack Connector to connect to a business network, extract the models and then present a page containing the REST APIs that have been generated for the model. To install `composer-rest-server` run the following command:
-```
-npm install -g composer-rest-server
-```
+## 3. Deploy the Business Network Archive on Hyperledger Composer running locally
 
-* `Yeoman` is a tool for generating applications. When combined with the `generator-hyperledger-composer` component, it can interpret business networks and generate applications based on them. To install `Yeoman` run the following command:
-```
-npm install -g yo
-```
-
-#### b) Starting Hyperledger Fabric
-You can either setup your own network by following the [instructions](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-network-byfn) or use the already configured network using `couchdb` for storing the transactions with the help of following commands:
-```
-cd fabric-tools
-./downloadFabric.sh
-./startFabric.sh
-./createComposerProfile.sh
-```  
- You end of your development session using:
- ```
-./stopFabric.sh
-./teardownFabric.sh
- ```
-
-#### c)Deploy to the running Hyperledger Fabric
-
-Change directory to the `dist` folder containing `product-auction.bna` file and type:
+Please start the local Fabric using the [instructions](https://github.com/IBM/BlockchainNetwork-CompositeJourney#2-starting-hyperledger-fabric).
+Now change directory to the `dist` folder containing `product-auction.bna` file and type:
 ```
 cd dist
 composer network deploy -a product-auction.bna -p hlfv1 -i PeerAdmin -s <randomString>
@@ -254,9 +239,6 @@ You can verify that the network has been deployed by typing:
 composer network ping -n product-auction -p hlfv1 -i admin -s adminpw
 ```
 
-#### d) Generate REST API
-
-To integrate with the deployed business network (creating assets/participants and submitting transactions) we can either use the Composer Node SDK or we can generate a REST API.
 To create the REST API we need to launch the `composer-rest-server` and tell it how to connect to our deployed business network.
 Now launch the server by changing directory to the product-auction folder and type:
 ```bash

@@ -78,7 +78,7 @@ describe('ProductAuction - AddProduct Test', () => {
                   })
                   .then((seller) => {
                       // check the length of product list
-                    //console.log(seller);
+                      //console.log(seller.products);
                       return seller.products.length.should.equal(1);
                   });
             });
@@ -102,10 +102,10 @@ describe('ProductAuction - AddProduct Test', () => {
                       .then((productRegistry)=>{
                           return productRegistry.get(productid);
                       })
-                      .then(()=>{
+                      .then((prod)=>{
                         const listing = factory.newTransaction(NS, 'StartBidding');
                         listing.reservePrice=50;
-                        listing.owner=factory.newRelationship(NS, 'Seller', sellerId);
+                        //listing.owner=factory.newRelationship(NS, 'Seller', sellerId);
                         listing.product=factory.newRelationship(NS, 'Product', productid);
                         return businessNetworkConnection.submitTransaction(listing);
                       })
@@ -116,7 +116,7 @@ describe('ProductAuction - AddProduct Test', () => {
                           return productListingRegistry.getAll();
                       })
                       .then((productListing)=>{
-                          productListing[0].owner.$identifier.should.equal(sellerId);
+                        return productListing.length.should.equal(1);
                       });
             });
 
@@ -180,29 +180,27 @@ describe('ProductAuction - AddProduct Test', () => {
 
             it('Close bid for the product', function() {
                 const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
-                const sellerId = 'daniel.selman@example.com';
+                //const sellerId = 'daniel.selman@example.com';
                 const buyerID = 'whitemat@example.com';
-                var productListingId=null;
                 // Get the asset registry.
+                var productId=null;
                 return businessNetworkConnection.getAssetRegistry(NS + '.ProductListing')
                       .then((productListingRegistry)=>{
                           return productListingRegistry.getAll();
                       })
                       .then((productListing)=>{
                           //console.log(productListing);
-                          productListingId = productListing[0].getIdentifier();
-                      })
-                      .then(() => {
-                        const offer = factory.newTransaction(NS, 'CloseBidding');
-                        offer.owner=factory.newRelationship(NS, 'Seller', sellerId);
-                        offer.listing=factory.newRelationship(NS, 'ProductListing', productListingId);
-                        return businessNetworkConnection.submitTransaction(offer);
+                          productId= productListing[0].product.getIdentifier();
+                          const offer = factory.newTransaction(NS, 'CloseBidding');
+                          //offer.owner=factory.newRelationship(NS, 'Seller', sellerId);
+                          offer.listing=factory.newRelationship(NS, 'ProductListing', productListing[0].getIdentifier());
+                          return businessNetworkConnection.submitTransaction(offer);
                       })
                       .then(()=>{
-                         return businessNetworkConnection.getAssetRegistry(NS + '.ProductListing');
+                         return businessNetworkConnection.getAssetRegistry(NS + '.Product');
                       })
-                      .then((productListingRegistry)=>{
-                         return productListingRegistry.get(productListingId);
+                      .then((productRegistry)=>{
+                         return productRegistry.get(productId);
                       })
                       .then((productListing)=>{
                         //  console.log(productListing);

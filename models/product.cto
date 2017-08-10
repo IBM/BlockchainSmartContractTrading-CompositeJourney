@@ -13,6 +13,7 @@ enum ListingState {
 asset Product identified by productId {
   o String productId
   o String description
+  --> User owner
 }
 
 asset ProductListing identified by listingId {
@@ -21,7 +22,6 @@ asset ProductListing identified by listingId {
   o ListingState state
   o Offer[] offers optional
   --> Product product
-  --> User owner
 }
 
 abstract participant User identified by email {
@@ -52,18 +52,16 @@ participant Member extends User {
 transaction Offer {
   o Double bidPrice
   --> ProductListing listing
-  --> Member member
+  --> User member
 }
 
 transaction CloseBidding {
   --> ProductListing listing
-  --> Seller owner
 }
 
 transaction StartBidding{
   o Double reservePrice
   --> Product product
-  --> Seller owner
 }
 
 transaction AddProduct{
