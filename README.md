@@ -1,6 +1,6 @@
 # Bidding Platform
 
-This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price), and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction.
+This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction.
 
 This business network defines:
 
@@ -19,7 +19,7 @@ The `publishListing` function is called when a `StartBidding` transaction is sub
 
 The `makeOffer` function is called when an `Offer` transaction is submitted. The logic simply checks that the listing for the offer is still for sale, and then adds the offer to the listing, and then updates the offers in the `ProductListing` asset registry.
 
-The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sorts the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
+The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sort the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
 
 You can determine which users/roles are permitted to create, read, update or delete elements in a business network's domain model with help of ACL rules in `permissions.acl` file .
 
@@ -122,7 +122,7 @@ In the `Member` participant registry, create two participants.
 ```
 
 Click on `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
-Please following the instructions as shown in the images below:
+Please follow the instructions as shown in the images below:
 
 ![Admin Tab](images/admintab.png)
 
@@ -132,11 +132,11 @@ Please following the instructions as shown in the images below:
 
 ![Ids to Wallet](images/idstowallet.png)
 
-Select the `seller id` from the `Wallet tab` tab. Now click on `test tab` perform Seller transactions such as `AddProduct` and `StartBidding`.
+Select the `seller id` from `Wallet tab` tab. Now click on the `test tab` to perform `AddProduct` and `StartBidding` transactions.
 
 ![Select Id](images/selectid.png)
 
-Now click on `Submit Transaction` and select `AddProduct` transaction from the dropdown, to create a product for the seller.
+Now click on `Submit Transaction` button and select `AddProduct` transaction from the dropdown, to create a product for the seller.
 ```
 {
   "$class": "org.acme.product.auction.AddProduct",
@@ -160,7 +160,7 @@ A listing has been created in `ProductListing` registry for the product with `FO
 
 Now Member participants can submit `Offer` transactions to bid on a product listing.
 
-For each `member id`, select the user id from the `Wallet tab`. Now click on `test tab` to submit an `Offer` transaction.
+For each `member id`, select the user id from the `Wallet tab`. To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button.
 > `ListingID` is the id of the listing copied from the `ProductListing` registry.
 
 ```
@@ -185,7 +185,7 @@ You can check the `ProductListing` registry, to view all the bids for the produc
 
 ![Product Offers](images/productoffers.png)
 
-Now again select the `seller id` from the `Wallet tab` tab. Now click on `test tab` to end the auction by submitting a `CloseBidding` transaction for the listing.
+Now again select the `seller id` from the `Wallet tab` tab. Click on `test tab` to end the auction by submitting a `CloseBidding` transaction for the listing.
 
 ```
 {
@@ -196,15 +196,15 @@ Now again select the `seller id` from the `Wallet tab` tab. Now click on `test t
 
 This simply indicates that the auction for `ListingID` is now closed, triggering the `closeBidding` function that was described above.
 
-To see the Product was sold you need to click on the `ProductListing` asset registry to check the owner of the product. The highest bid is placed by owner `memberB@acme.org` so you should see the owner of the product is now `memberB@acme.org`.
+To check whether the Product is sold you need to click on the `ProductListing` asset registry and check the owner of the product. The highest bid was placed by owner `memberB@acme.org`, so `memberB@acme.org` should be the owner of the product.
 
-![New Owner of Product](images/newowner.png)
-
-If you check the state of the ProductListing with `ListingID` is `SOLD`.
+You can check the state of the ProductListing with `<ListingID>` is `SOLD`.
 
 ![Product Listing Sold](images/soldlisting.png)
 
-If you click on the `Member` asset registry you can check the balance of each User. You should see that the balance of the buyer `memberB@acme.org` has been debited by `100`, whilst the balance of the seller `auction@acme.org` has been credited with `100`. Also the product list of the buyer `memberB@acme.org` is updated.
+Click on the `Member` asset registry to verify the updated balance for buyer and seller. The product is added to the product list of the buyer `memberB@acme.org`.
+
+![New Owner of Product](images/newowner.png)
 
 You can view history of all transactions by selecting the `All transactions` tab.
 
