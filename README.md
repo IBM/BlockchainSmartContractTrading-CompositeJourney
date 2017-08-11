@@ -1,6 +1,6 @@
-# Bidding Platform
+# Hyperledger Composer - Product Auction Network
 
-This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction.
+This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file.
 
 This business network defines:
 
@@ -21,7 +21,9 @@ The `makeOffer` function is called when an `Offer` transaction is submitted. The
 
 The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sort the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
 
-You can determine which users/roles are permitted to create, read, update or delete elements in a business network's domain model with help of ACL rules in `permissions.acl` file .
+`product.cto` file present in `models` directory defines a data model for the product auction demo which consists the definition for assets, participants and transactions. `logic.js` file present in `lib` directory implement the transactions defined in the `product.cto` file.
+
+ACL rules are present in `permissions.acl` file to determine which user/role is permitted to create, read, update or delete an element in the business network's domain model. The default `System` user has all the permissions. Members of the network have read access to all the resources and the seller can create a product, start and close the bidding for their products. Members of the network can make their bid for the product listing. Participants can access only permitted resources and transactions.
 
 ## Steps
 1. [Generate the Business Network Archive (BNA)](#1-generate-the-business-network-archive-bna)
