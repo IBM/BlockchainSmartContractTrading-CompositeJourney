@@ -1,6 +1,7 @@
 # Hyperledger Composer - Product Auction Network
 
-This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). In this journey, we create an interactive, distributed, product auction demo network. We list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file.
+Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.
+
 
 This business network defines:
 
@@ -21,7 +22,7 @@ The `makeOffer` function is called when an `Offer` transaction is submitted. The
 
 The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sort the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
 
-`product.cto` file present in `models` directory defines a data model for the product auction demo which consists the definition for assets, participants and transactions. `logic.js` file present in `lib` directory implement the transactions defined in the `product.cto` file.
+`product.cto` file present in `models` directory defines a data model for the product auction demo which consists the definition for assets, participants and transactions. `logic.js` file present in `lib` directory implement the transactions defined in the `product.cto` file.  Recall that the `.cto` file defines the structure of your business network in terms of Assets, Participants and Transactions.
 
 ACL rules are present in `permissions.acl` file to determine which user/role is permitted to create, read, update or delete an element in the business network's domain model. The default `System` user has all the permissions. Members of the network have read access to all the resources and the seller can create a product, start and close the bidding for their products. Members of the network can make their bid for the product listing. Participants can access only permitted resources and transactions.
 
@@ -85,9 +86,11 @@ You should see the following output :
 Open [Composer Playground](http://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
 If you have previously used Playground, be sure to clear your browser local storage by running `localStorage.clear()` in your browser Console. Now import the `product-auction.bna` file and click on deploy button.
 
+
 To test this Business Network Definition in the **Test** tab:
 
-In the `Seller` participant registry, create a new participant.
+
+In the `Seller` participant registry, create a new participant. Make sure you click on the `Seller` tab on the far left-hand side.
 
 ```
 {
@@ -99,7 +102,7 @@ In the `Seller` participant registry, create a new participant.
 }
 ```
 
-In the `Member` participant registry, create two participants.
+In the `Member` participant registry, create two participants. Again, click on the `Member` tab on the far left-hand side.
 
 ```
 {
@@ -123,8 +126,10 @@ In the `Member` participant registry, create two participants.
 }
 ```
 
-Click on `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
+Now we are ready to add **Access Control**. Do this by first clicking on the `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
 Please follow the instructions as shown in the images below:
+
+* Click +add to my Wallet under Option 2 to actually add to your wallet.
 
 ![Admin Tab](images/admintab.png)
 
@@ -139,6 +144,8 @@ Select the `seller id` from `Wallet tab` tab. Now click on the `test tab` to per
 ![Select Id](images/selectid.png)
 
 Now click on `Submit Transaction` button and select `AddProduct` transaction from the dropdown, to create a product for the seller.
+![addproduct](images/addproduct.png)
+
 ```
 {
   "$class": "org.acme.product.auction.AddProduct",
@@ -148,7 +155,7 @@ Now click on `Submit Transaction` button and select `AddProduct` transaction fro
 ```
 You can verify the transaction by checking the product and seller registry.
 
-To create a product listing for the above product, copy the `ProductID` from the product registry. Then submit `StartBidding` transaction.
+To create a product listing for the above product, copy the `ProductID` from the product registry. Then submit `StartBidding` transaction. Remember to replace `<ProductID>` with the product id you just copied.
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
