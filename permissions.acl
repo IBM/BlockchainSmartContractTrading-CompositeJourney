@@ -67,7 +67,7 @@ rule StartBiddingProcessTransaction {
      participant(m): "org.acme.product.auction.User"
      operation: CREATE
      resource(v): "org.acme.product.auction.Product"
-     transaction(tx): "org.acme.product.auction.CloseBidding"
+     transaction(tx): "org.acme.product.auction.StartBidding"
      condition: (v.owner.getIdentifier() == m.getIdentifier())
      action: ALLOW
  }
