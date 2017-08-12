@@ -26,7 +26,7 @@ The `closeBidding` function is called when a `CloseBidding` transaction is submi
 
 ACL rules are present in `permissions.acl` file to determine which user/role is permitted to create, read, update or delete an element in the business network's domain model. The default `System` user has all the permissions. Members of the network have read access to all the resources and the seller can create a product, start and close the bidding for their products. Members of the network can make their bid for the product listing. Participants can access only permitted resources and transactions.
 
-##Included Components
+## Included Components
 * Hyperledger Fabric
 * Hyperledger Composer
 * Docker
