@@ -240,7 +240,7 @@ Please start the local Fabric using the [instructions](https://github.com/IBM/Bl
 Now change directory to the `dist` folder containing `product-auction.bna` file and type:
 ```
 cd dist
-composer network deploy -a product-auction.bna -p hlfv1 -i PeerAdmin -s <randomString>
+composer network deploy -a product-auction.bna -p hlfv1 -i PeerAdmin -s randomString -A admin -S
 ```
 
 After sometime time business netwokr should be deployed to the local Hyperledger Fabric. You should see the output as follows:
@@ -270,21 +270,17 @@ composer-rest-server
 
 Answer the questions posed at startup. These allow the composer-rest-server to connect to Hyperledger Fabric and configure how the REST API is generated.
 ```
-  _   _                                 _              _                                  ____                                                         
- | | | |  _   _   _ __     ___   _ __  | |   ___    __| |   __ _    ___   _ __           / ___|   ___    _ __ ___    _ __     ___    ___    ___   _ __
- | |_| | | | | | | '_ \   / _ \ | '__| | |  / _ \  / _` |  / _` |  / _ \ | '__|  _____  | |      / _ \  | '_ ` _ \  | '_ \   / _ \  / __|  / _ \ | '__|
- |  _  | | |_| | | |_) | |  __/ | |    | | |  __/ | (_| | | (_| | |  __/ | |    |_____| | |___  | (_) | | | | | | | | |_) | | (_) | \__ \ |  __/ | |   
- |_| |_|  \__, | | .__/   \___| |_|    |_|  \___|  \__,_|  \__, |  \___| |_|             \____|  \___/  |_| |_| |_| | .__/   \___/  |___/  \___| |_|   
-          |___/  |_|                                       |___/                                                    |_|                                
-? Enter your Fabric Connection Profile Name: hlfv1
-? Enter your Business Network Identifier : product-auction
-? Enter your Fabric username : admin
-? Enter your secret: adminpw
+? Enter your Connection Profile Name: hlfv1
+? Enter your Business Network name : product-auction
+? Enter your enrollment ID : admin
+? Enter your enrollment secret : adminpw
 ? Specify if you want namespaces in the generated REST API: never use namespaces
-? Specify if you want the generated REST API to be secured: No
+? Specify if you want to enable authentication for the REST API using Passport: No
+? Specify if you want to enable event publication over WebSockets: No
+? Specify if you want to enable TLS security for the REST API: No
 
 To restart the REST server using the same options, issue the following command:
-   composer-rest-server -p hlfv1 -n product-auction -i admin -s adminpw -N never
+		composer-rest-server -p hlfv1 -n product-auction -i admin -s adminpw -N never
 
 Discovering types from business network definition ...
 Discovered types from business network definition

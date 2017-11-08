@@ -142,7 +142,6 @@ describe('ProductAuction - AddProduct Test', () => {
                           return productListingRegistry.getAll();
                       })
                       .then((productListing)=>{
-                          //console.log(productListing);
                           productListingId = productListing[0].getIdentifier();
                       })
                       .then(() => {
