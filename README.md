@@ -211,7 +211,7 @@ Now again select the `seller id` from the `Wallet tab` tab. Click on `test tab` 
 
 ```
 {
-  "$class": "org.acme.vehicle.auction.CloseBidding",
+  "$class": "org.acme.product.auction.CloseBidding",
   "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>"
 }
 ```
