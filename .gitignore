@@ -50,5 +50,3 @@ dist
 node_modules
 
 composer-logs
-
-package-lock.json
