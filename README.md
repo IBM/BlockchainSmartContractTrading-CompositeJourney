@@ -285,6 +285,8 @@ Open a web browser and navigate to http://localhost:3000/explorer
 
 You should see the LoopBack API Explorer, allowing you to inspect and test the generated REST API. Follow the instructions to test Business Network Definition as mentioned above in the composer section.
 
+## Ready to move to Step 3!
+Congratulations - you have completed Step 2 of this Composite Journey - move onto [Step 3](https://github.com/IBM/BlockchainEvents-CompositeJourney).
 
 ## Additional Resources
 * [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
