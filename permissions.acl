@@ -4,19 +4,29 @@
 
  rule MembersCanViewALLData {
      description: "Allow all participants read access to all resources"
-     participant: "org.acme.product.auction.*"
+     participant(m): "org.acme.product.auction.User"
      operation: READ
-     resource: "org.acme.product.auction.*"
+     resource(v): "org.acme.product.auction.*"
+   	 condition: (v.getIdentifier() == m.getIdentifier())
      action: ALLOW
  }
 
  rule SellerCanUpdateData {
      description: "Allow all seller access to all resources"
-     participant: "org.acme.product.auction.Seller"
+     participant(m): "org.acme.product.auction.Seller"
      operation: ALL
-     resource: "org.acme.product.auction.*"
+     resource(v): "org.acme.product.auction.Seller"
+     condition: (v.getIdentifier() == m.getIdentifier())
      action: ALLOW
  }
+
+rule ProductView {
+    description: "Allow Users all access to their products"
+    participant: "org.acme.product.auction.User"
+    operation: READ
+    resource: "org.acme.product.auction.Product"
+    action: ALLOW
+}
 
 rule ProductAccess {
     description: "Allow Users all access to their products"
@@ -27,12 +37,20 @@ rule ProductAccess {
     action: ALLOW
 }
 
+rule ProductListingView {
+    description: "Allow the owner of a product total access to their listing"
+    participant: "org.acme.product.auction.User"
+    operation: READ
+    resource: "org.acme.product.auction.ProductListing"
+    action: ALLOW
+}
+
 rule ProductListingOwner {
     description: "Allow the owner of a product total access to their listing"
     participant(m): "org.acme.product.auction.User"
     operation: ALL
     resource(v): "org.acme.product.auction.ProductListing"
-    condition: (v.owner.getIdentifier() == m.getIdentifier())
+    condition: (v.product.owner.getIdentifier() == m.getIdentifier())
     action: ALLOW
 }
 
@@ -92,7 +110,7 @@ rule SystemACL {
 
 rule Default {
     description: "Allow all participants access to all resources"
-    participant: "ANY"
+    participant: "org.hyperledger.composer.system.*"
     operation: ALL
     resource: "org.acme.product.auction.*"
     action: ALLOW
