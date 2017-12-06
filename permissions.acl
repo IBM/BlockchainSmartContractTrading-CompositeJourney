@@ -7,7 +7,15 @@
      participant(m): "org.acme.product.auction.User"
      operation: READ
      resource(v): "org.acme.product.auction.*"
-   	 condition: (v.getIdentifier() == m.getIdentifier())
+     condition: (v.getIdentifier() == m.getIdentifier())
+     action: ALLOW
+ }
+
+ rule SellerCanViewMemberData {
+     description: "Allow all participants read access to all resources"
+     participant: "org.acme.product.auction.Seller"
+     operation: READ
+     resource: "org.acme.product.auction.Member"
      action: ALLOW
  }
 
@@ -84,9 +92,8 @@ rule StartBiddingProcessTransaction {
      description: "Allow owner of product to start the bidding"
      participant(m): "org.acme.product.auction.User"
      operation: CREATE
-     resource(v): "org.acme.product.auction.Product"
-     transaction(tx): "org.acme.product.auction.StartBidding"
-     condition: (v.owner.getIdentifier() == m.getIdentifier())
+     resource(v): "org.acme.product.auction.StartBidding"
+     condition: (v.product.owner.getIdentifier() == m.getIdentifier())
      action: ALLOW
  }
 
@@ -94,32 +101,41 @@ rule StartBiddingProcessTransaction {
      description: "Allow owner of product to close the bidding"
      participant(m): "org.acme.product.auction.User"
      operation: CREATE
-     resource(v): "org.acme.product.auction.ProductListing"
-     transaction(tx): "org.acme.product.auction.CloseBidding"
-     condition: (v.owner.getIdentifier() == m.getIdentifier())
+     resource(v): "org.acme.product.auction.CloseBidding"
+     condition: (v.listing.product.owner.getIdentifier() == m.getIdentifier())
      action: ALLOW
  }
 
- rule SystemACL {
-   description:  "System ACL to permit all access"
-   participant: "org.hyperledger.composer.system.Participant"
-   operation: ALL
-   resource: "org.hyperledger.composer.system.**"
-   action: ALLOW
- }
+rule CloseBiddingProcessTransactionUpdate {
+      description: "Allow members to bid for the product"
+      participant(m): "org.acme.product.auction.User"
+      operation: UPDATE
+      resource(v): "org.acme.product.auction.User"
+      transaction(tx): "org.acme.product.auction.CloseBidding"
+      condition: (tx.listing.product.owner.getIdentifier() == m.getIdentifier())
+      action: ALLOW
+}
 
- rule NetworkAdminUser {
-     description: "Grant business network administrators full access to user resources"
-     participant: "org.hyperledger.composer.system.NetworkAdmin"
-     operation: ALL
-     resource: "**"
-     action: ALLOW
- }
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
 
- rule NetworkAdminSystem {
-     description: "Grant business network administrators full access to system resources"
-     participant: "org.hyperledger.composer.system.NetworkAdmin"
-     operation: ALL
-     resource: "org.hyperledger.composer.system.**"
-     action: ALLOW
- }
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
