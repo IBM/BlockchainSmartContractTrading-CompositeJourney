@@ -1,22 +1,25 @@
-# Hyperledger Composer - Product Auction Network
+# 하이퍼레저 컴포저 - 상품 경매 네트워크
 
-Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.
+하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 경매가 끝나면 예비 가격을 설정하고 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전되어 판매할 자산 (예비 가격 설정)을 표시합니다. 또한 각 참가자는 permissions.acl 파일의 ACL (액세스 제어 규칙)에 따라 다른 수준의 액세스 권한을 갖습니다. ACL (Access Control List)은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.
 
+ 
+이 비즈니스 네트워크는 다음을 정의합니다:
 
-This business network defines:
-
-**Participants:**
+**참가자:**
 `Member` `Seller`
 
-**Assets:**
+**자산:**
 `Product` `ProductListing`
 
-**Transactions:**
+**거래:**
 `AddProduct` `StartBidding` `Offer` `CloseBidding`
 
-The `addProduct` function is called when an `AddProduct` transaction is submitted. The logic allows a seller to create a product asset and update its registry.
+`addProduct` 함수는  `AddProduct` 트랜잭션이 제출될 때 호출됩니다. 이 로직을 따라 판매자는 제품 자산을 작성하고 레지스트리를 업데이트할 수 있습니다.
 
 The `publishListing` function is called when a `StartBidding` transaction is submitted by the owner of product. The logic allows a seller to create a smart contract in the form of product listing for their product with a reserve bid.
+`publishListing` 함수는 제품의 소유자가 `StartBidding` 트랜잭션을 제출할 때 호출됩니다. 이 로직을 사용하면 판매자는 예비 입찰가로 본인의 제품에 대해 제품 리스트의 형태로 스마트 계약을 체결할 수 있습니다.(이게 무슨 소리인지?)
+
+The `publishListing` function is called when a `StartBidding` transaction is submitted by the owner of product. The logic allows a seller to create a smart contract in the form of product listing for their product with a reserve bi.
 
 The `makeOffer` function is called when an `Offer` transaction is submitted. The logic simply checks that the listing for the offer is still for sale, and then adds the offer to the listing, and then updates the offers in the `ProductListing` asset registry.
 
