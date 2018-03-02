@@ -1,7 +1,6 @@
 # 하이퍼레저 컴포저 - 상품 경매 네트워크
 
-하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 경매가 끝나면 예비 가격을 설정하고 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전되어 판매할 자산 (예비 가격 설정)을 표시합니다. 또한 각 참가자는 permissions.acl 파일의 ACL (액세스 제어 규칙)에 따라 다른 수준의 액세스 권한을 갖습니다. ACL (Access Control List)은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.
-
+하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 다른 수준의 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.  
  
 이 비즈니스 네트워크는 다음을 정의합니다:
 
@@ -16,46 +15,43 @@
 
 `addProduct` 함수는  `AddProduct` 트랜잭션이 제출될 때 호출됩니다. 이 로직을 따라 판매자는 제품 자산을 작성하고 레지스트리를 업데이트할 수 있습니다.
 
-The `publishListing` function is called when a `StartBidding` transaction is submitted by the owner of product. The logic allows a seller to create a smart contract in the form of product listing for their product with a reserve bid.
-`publishListing` 함수는 제품의 소유자가 `StartBidding` 트랜잭션을 제출할 때 호출됩니다. 이 로직을 사용하면 판매자는 예비 입찰가로 본인의 제품에 대해 제품 리스트의 형태로 스마트 계약을 체결할 수 있습니다.(이게 무슨 소리인지?)
+`publishListing` 함수는 제품의 소유자가 `StartBidding` 트랜잭션을 제출할 때 호출됩니다. 이 화면에서 판매자는 본인이 판매할 제품과 판매 시작가를 입력하여 스마트 계약을 생성할 수 있습니다.
 
-The `publishListing` function is called when a `StartBidding` transaction is submitted by the owner of product. The logic allows a seller to create a smart contract in the form of product listing for their product with a reserve bi.
+`Offer` 트렌잭션이 제출되면 `makeOffer` 함수가 호출됩니다. 이 로직은 오퍼 리스트가 아직 판매 중인지를 단순히 확인한 다음, 해당 오퍼를 목록에 추가한 후  `ProductListing` 자산 레지스트리의 오퍼를 업데이트합니다.
 
-The `makeOffer` function is called when an `Offer` transaction is submitted. The logic simply checks that the listing for the offer is still for sale, and then adds the offer to the listing, and then updates the offers in the `ProductListing` asset registry.
+`closeBidding` 트랜잭션이 처리를 위해 제출되면 `closeBidding` 함수가 호출됩니다. 이 로직은 해당 리스트가 아직 판매중인지 확인하고 입찰 가격으로 오퍼를 정렬한 다음 준비금이 맞으면, 리스트와 연결된 제품의 소유권을 최고 입찰자에게 이전합니다. 구매자의 계좌에서 판매자의 계좌로 돈이 전송된 후 수정된 모든 자산이 각각의 레지스트리에서 업데이트됩니다.
 
-The `closeBidding` function is called when a `CloseBidding` transaction is submitted for processing. The logic checks that the listing is still for sale, sort the offers by bid price, and then if the reserve has been met, transfers the ownership of the product associated with the listing to the highest bidder. Money is transferred from the buyer's account to the seller's account, and then all the modified assets are updated in their respective registries.
+`models` 디렉토리에있는 `product.cto` 파일은 자산, 참여자 및 트랜잭션에 대한 정의로 구성된 제품 경매 데모에 대한 데이터 모델을 정의합니다. `lib` 디렉토리에 있는 `logic.js` 파일은 `product.cto` 파일에 정의된 트랜잭션을 구현합니다. `.cto` 파일은 자산, 참여자 및 트랜잭션 측면에서 비즈니스 네트워크의 구조를 정의합니다.
 
-`product.cto` file present in `models` directory defines a data model for the product auction demo which consists the definition for assets, participants and transactions. `logic.js` file present in `lib` directory implement the transactions defined in the `product.cto` file.  Recall that the `.cto` file defines the structure of your business network in terms of Assets, Participants and Transactions.
+`permissions.acl` 파일에 위치한 ACL 규칙으로 비즈니스 네트워크의 도메인 모델의 한 요소를 작성, 읽기, 업데이트 또는 삭제할 수 있는 사용자/역할을 결정합니다. 기본 `System` 사용자에게는 모든 권한이 있습니다. 네트워크 구성원은 모든 리소스에 대한 읽기 권한을 가지며 판매자는 제품을 만들고 제품에 대한 입찰을 시작하고 종료할 수 있습니다. 네트워크 회원은 제품 리스트에 대한 입찰을 할 수 있습니다. 참여자는 허용된 자원 및 트랜잭션에만 액세스할 수 있습니다.
 
-ACL rules are present in `permissions.acl` file to determine which user/role is permitted to create, read, update or delete an element in the business network's domain model. The default `System` user has all the permissions. Members of the network have read access to all the resources and the seller can create a product, start and close the bidding for their products. Members of the network can make their bid for the product listing. Participants can access only permitted resources and transactions.
+## 구성 요소
+* 하이퍼레저 패브릭
+* 하이퍼레저 컴포저
+* 도커
 
-## Included Components
-* Hyperledger Fabric
-* Hyperledger Composer
-* Docker
+## 애플리케이션 워크플로우 도표 
+![애플리케이션 워크플로우](images/GettingStartedWComposer-arch-diagram.png)
 
-## Application Workflow Diagram
-![Application Workflow](images/GettingStartedWComposer-arch-diagram.png)
-
-Creating multiple participants and adding ACL
-* Adding additional participants
-* Adding Access Control Lists
-* Querying and invoking the Chaincode
+여러 참가자 생성 및 ACL 추가
+* 추가적인 참가자 추가
+* Access Control Lists(엑세스 제어 리스트) 추가
+* 체인코드 쿼리 및 호출
 
 ## Steps
-1. [Generate the Business Network Archive (BNA)](#1-generate-the-business-network-archive-bna)
-2. [Deploy the Business Network Archive using Composer Playground](#2-deploy-the-business-network-archive-using-composer-playground)
+1. [비즈니스 네트워크 아카이브 (BNA) 생성](#1-비즈니스-네트워크-아카이브-bna-생성)
+2. [컴포저 플레이그라운드를 사용하여 비즈니스 네트워크 아카이브 배포](#2-컴포저-플레이그라운드를-사용하여-비즈니스-네트워크-아카이브-배포)
 3. [Deploy the Business Network Archive on Hyperledger Composer running locally](#3-deploy-the-business-network-archive-on-hyperledger-composer-running-locally)
 
-## 1. Generate the Business Network Archive (BNA)
+## 1. 비즈니스 네트워크 아카이브 (BNA) 생성
 
-To check that the structure of the files is valid, you can now generate a Business Network Archive (BNA) file for your business network definition. The BNA file is the deployable unit -- a file that can be deployed to the Composer runtime for execution.
+파일 구조가 유효한지 확인하려면 비즈니스 네트워크 정의에 대한 BNA (Business Network Archive) 파일을 생성합니다. BNA 파일은 배포 가능한 유닛으로, 실행을 위해 컴포저 런타임에 배포할 수 있습니다.
 
-Use the following command to generate the network archive:
+다음 명령을 사용하여 네트워크 아카이브를 생성합니다:
 ```bash
 npm install
 ```
-You should see the following output:
+다음과 같은 결과가 나옵니다:
 ```bash
 > mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/product-auction.bna
 
@@ -74,14 +70,13 @@ Written Business Network Definition Archive file to
 
 Command succeeded
 ```
-The `composer archive create` command has created a file called `product-auction.bna` in the `dist` folder.
+`composer archive create` 명령을 사용하면 `dist`폴더 안에 `product-auction.bna` 파일이 생성됩니다.
 
-You can test the business network definition against the embedded runtime that stores the state of 'the blockchain' in-memory in a Node.js process.
-From your project working directory, open the file test/productAuction.js and run the following command:
+Node.js 프로세스에서 '블록체인' 인메모리 상태를 저장하는 임베디드 런타임에 대해 비즈니스 네트워크 정의를 테스트할 수 있습니다. 프로젝트 작업 디렉토리에서 test/productAuction.js 파일을 열고 다음 명령을 실행하십시오:
 ```
 npm test
 ```
-You should see the following output :
+다음과 같은 결과가 나옵니다 :
 ```
 > product-auction@0.0.1 test /Users/ishan/Documents/git-demo/BlockchainBalanceTransfer-CompositeJourney
 > mocha --recursive
@@ -97,16 +92,16 @@ You should see the following output :
   4 passing (2s)
 ```
 
-## 2. Deploy the Business Network Archive using Composer Playground
+## 2. 컴포저 플레이그라운드를 사용하여 비즈니스 네트워크 아카이브 배포
 
-Open [Composer Playground](http://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
-If you have previously used Playground, be sure to clear your browser local storage by running `localStorage.clear()` in your browser Console. Now import the `product-auction.bna` file and click on deploy button.
-
-
-To test this Business Network Definition in the **Test** tab:
+[컴포저 플레이그라운드](http://composer-playground.mybluemix.net/)를 열어서, 기본 샘플 네트워크를 가져옵니다.
+이전에 플레이그라운드를 사용한 적이 있다면, 브라우저 콘솔에서 `localStorage.clear()` 을 사용해 브라우저 로컬 저장소를 지우십시오. 이제 `product-auction.bna` 파일을 가져와서 deploy 버튼을 클릭합니다.
 
 
-In the `Seller` participant registry, create a new participant. Make sure you click on the `Seller` tab on the far left-hand side.
+**Test** tab**테스트** 탭에서 이 비즈니스 네트워크 정의를 테스트하려면:
+
+
+`Seller` 참여자 레지스트리에서 새 참여자를 작성하십시오. 맨 왼쪽에 있는 `Seller` 탭을 클릭하십시오.
 
 ```
 {
@@ -118,7 +113,7 @@ In the `Seller` participant registry, create a new participant. Make sure you cl
 }
 ```
 
-In the `Member` participant registry, create two participants. Again, click on the `Member` tab on the far left-hand side.
+`Member` 참여자 레지스트리에서 두 명의 참가자를 만듭니다. 다시 왼쪽 끝에있는 Member 탭을 클릭하십시오.
 
 ```
 {
@@ -142,10 +137,9 @@ In the `Member` participant registry, create two participants. Again, click on t
 }
 ```
 
-Now we are ready to add **Access Control**. Do this by first clicking on the `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
-Please follow the instructions as shown in the images below:
+이제 **Access Control**을 추가할 준비가 되었습니다. 먼저 `admin` 탭을 클릭하여 참가자에게 **새로운 ID**를 발급하고 ID를 월렛에 추가하십시오. 아래 이미지와 같이 지침을 따르십시오:
 
-* Click +add to my Wallet under Option 2 to actually add to your wallet.
+*실제로 월렛에 추가하려면 옵션 2에서 +add to my Wallet을 클릭하십시오.
 
 ![Admin Tab](images/admintab.png)
 
@@ -155,7 +149,7 @@ Please follow the instructions as shown in the images below:
 
 ![Ids to Wallet](images/idstowallet.png)
 
-Select the `seller id` from `Wallet tab` tab. Now click on the `test tab` to perform `AddProduct` and `StartBidding` transactions.
+`Wallet tab`에서 `seller id`를 선택하십시오. `test tab`을 클릭하여 `AddProduct` 및 `StartBidding` 트랜잭션을 수행합니다.
 
 ![Select Id](images/selectid.png)
 
