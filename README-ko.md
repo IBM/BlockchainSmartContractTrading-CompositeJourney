@@ -1,5 +1,7 @@
 # 하이퍼레저 컴포저 - 상품 경매 네트워크
 
+*Read this in other languages: [English](README.md), [中国](README-cn.md).*
+
 하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 다른 수준의 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.  
  
 이 비즈니스 네트워크는 다음을 정의합니다:
@@ -255,7 +257,7 @@ The connection to the network was successfully tested: product-auction
 Command succeeded
 ```
 
-REST API를 만들려면 `composer-rest-server`를 시작하여 배포된 비즈니스 네트워크에 연결하는 방법을 알려줘야합니다. (무슨 소리인지??????)
+REST API를 만들려면 `composer-rest-server`를 시작하여 배포된 비즈니스 네트워크의 접속 정보를 설정합니다.
 이제 디렉토리를 제품 경매 폴더로 변경하고 다음을 입력하여 서버를 시작하십시오:
 ```bash
 cd ..
