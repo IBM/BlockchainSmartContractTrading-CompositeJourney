@@ -1,8 +1,8 @@
 # 하이퍼레저 컴포저 - 상품 경매 네트워크
 
-*Read this in other languages: [English](README.md).*
+*다른 언어로 보기: [English](README.md).*
 
-하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 다른 수준의 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.  
+하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고, 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 다른 수준의 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.  
  
 이 비즈니스 네트워크는 다음을 정의합니다:
 
@@ -281,7 +281,7 @@ Browse your REST API at http://localhost:3000/explorer
 
 브라우저를 열어서 http://localhost:3000/explorer 로 이동합니다.
 
-You should see the LoopBack API Explorer, allowing you to inspect and test the generated REST API. Follow the instructions to test Business Network Definition as mentioned above in the composer section. 생성된 REST API를 검사하고 테스트할 수 있도록 LoopBack API Explorer가 표시되어야 합니다. 위의 지시사항에 따라 컴포저 섹션에서 설명한대로 비즈니스 네트워크 정의(Business Network Definition)를 테스트하십시오.
+생성된 REST API를 검사하고 테스트할 수 있도록 LoopBack API Explorer가 표시되어야 합니다. 위의 지시사항에 따라 컴포저 섹션에서 설명한대로 비즈니스 네트워크 정의(Business Network Definition)를 테스트하십시오.
 
 ## 3단계로 이동할 준비가 되었습니다!
 축하합니다 - 2단계를 완수하셨습니다. 이제 [3단계](https://github.com/IBM/BlockchainEvents-CompositeJourney)로 이동합니다.
