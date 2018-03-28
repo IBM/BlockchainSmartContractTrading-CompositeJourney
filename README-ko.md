@@ -2,7 +2,7 @@
 
 *다른 언어로 보기: [English](README.md).*
 
-하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이는 [컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 여러 참가자를 추가하고, 블록체인 애플리케이션에 액세스 제어를 추가하는 방법을 배우게 됩니다. 그렇게하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 다른 수준의 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다.  
+하이퍼레저 컴포저(Hyperledger Composer) Composite Journey의 Part 2에 오신 것을 환영합니다. 이번 세션은 [하이퍼레저 컴포저 네트워크 설정하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network) 시리즈 중 하나입니다. 이 과정은 스마트 계약을 정의하기 위해 하이퍼레저 컴포저를 사용하는 좀 더 복잡한 내용을 다룹니다. 이 네트워크에 여러 참가자를 추가하고, 블록체인 애플리케이션에 대한 액세스 제어권한을 추가하는 방법을 배우게 됩니다. 이 기능들을 적용하기 위해 - 대화형의 분산된 제품 경매 데모 네트워크를 만들 것입니다. 판매할 자산(예비 가격 설정)을 리스트에 넣으면, 경매 종료 후 예비 가격을 설정한 자산이 자동으로 최고 입찰자에게 이전됩니다. 또한 각 참가자는 permissions.acl 파일의 액세스 제어 규칙에 따라 개별적인 액세스 권한을 갖습니다. 이 ACL(Access Control List) 파일은 패브릭 컴포저 런타임에 의해 자동 적용되는 공유 및 개인 정보 보호를 위한 설정입니다. 
  
 이 비즈니스 네트워크는 다음을 정의합니다:
 
@@ -17,9 +17,9 @@
 
 `addProduct` 함수는  `AddProduct` 트랜잭션이 제출될 때 호출됩니다. 이 로직을 따라 판매자는 제품 자산을 작성하고 레지스트리를 업데이트할 수 있습니다.
 
-`publishListing` 함수는 제품의 소유자가 `StartBidding` 트랜잭션을 제출할 때 호출됩니다. 이 화면에서 판매자는 본인이 판매할 제품과 판매 시작가를 입력하여 스마트 계약을 생성할 수 있습니다.
+`publishListing` 함수는 제품의 소유자가 `StartBidding` 트랜잭션을 제출할 때 호출됩니다. 데모 화면상에서 판매자는 본인이 판매할 제품과 판매 시작가를 입력하여 스마트 계약을 생성할 수 있습니다.
 
-`Offer` 트렌잭션이 제출되면 `makeOffer` 함수가 호출됩니다. 이 로직은 오퍼 리스트가 아직 판매 중인지를 단순히 확인한 다음, 해당 오퍼를 목록에 추가한 후  `ProductListing` 자산 레지스트리의 오퍼를 업데이트합니다.ㅎ
+`Offer` 트렌잭션이 제출되면 `makeOffer` 함수가 호출됩니다. 이 로직은 오퍼 리스트가 아직 판매 중인지를 단순히 확인한 다음, 해당 오퍼를 목록에 추가한 후  `ProductListing` 자산 레지스트리의 오퍼를 업데이트합니다.
 `closeBidding` 트랜잭션이 처리를 위해 제출되면 `closeBidding` 함수가 호출됩니다. 이 로직은 해당 리스트가 아직 판매중인지 확인하고 입찰 가격으로 오퍼를 정렬한 다음 준비금이 맞으면, 리스트와 연결된 제품의 소유권을 최고 입찰자에게 이전합니다. 구매자의 계좌에서 판매자의 계좌로 돈이 전송된 후 수정된 모든 자산이 각각의 레지스트리에서 업데이트됩니다.
 
 `models` 디렉토리에있는 `product.cto` 파일은 자산, 참여자 및 트랜잭션에 대한 정의로 구성된 제품 경매 데모에 대한 데이터 모델을 정의합니다. `lib` 디렉토리에 있는 `logic.js` 파일은 `product.cto` 파일에 정의된 트랜잭션을 구현합니다. `.cto` 파일은 자산, 참여자 및 트랜잭션 측면에서 비즈니스 네트워크의 구조를 정의합니다.
@@ -46,7 +46,7 @@
 
 ## 1. 비즈니스 네트워크 아카이브 (BNA) 생성하기
 
-파일 구조가 유효한지 확인하려면 비즈니스 네트워크 정의에 대한 BNA (Business Network Archive) 파일을 생성합니다. BNA 파일은 배포 가능한 유닛으로, 실행을 위해 컴포저 런타임에 배포할 수 있습니다.
+파일 구조가 유효한지 확인하려면 비즈니스 네트워크 정의에 대한 BNA (Business Network Archive) 파일을 생성합니다. BNA 파일은 배포 가능한 유닛으로, 실행을 위해 하이퍼레저 컴포저 런타임에 배포할 수 있습니다.
 
 다음 명령을 사용하여 네트워크 아카이브를 생성합니다:
 ```bash
@@ -73,7 +73,7 @@ Command succeeded
 ```
 `composer archive create` 명령을 사용하면 `dist`폴더 안에 `product-auction.bna` 파일이 생성됩니다.
 
-Node.js 프로세스에서 '블록체인' 인메모리 상태를 저장하는 임베디드 런타임에 대해 비즈니스 네트워크 정의를 테스트할 수 있습니다. 프로젝트 작업 디렉토리에서 test/productAuction.js 파일을 열고 다음 명령을 실행하십시오:
+Node.js 프로세스에서 '블록체인' 인메모리 상태를 저장하는 임베디드 런타임을 통해, 생성한 비즈니스 네트워크를 테스트할 수 있습니다. 프로젝트 작업 디렉토리에서 test/productAuction.js 파일을 열고 다음 명령을 실행하십시오:
 ```
 npm test
 ```
@@ -93,10 +93,10 @@ npm test
   4 passing (2s)
 ```
 
-## 2. 컴포저 플레이그라운드를 사용하여 비즈니스 네트워크 아카이브 배포
+## 2. 컴포저 플레이그라운드를 사용하여 비즈니스 네트워크 아카이브 배포하기
 
 [컴포저 플레이그라운드](http://composer-playground.mybluemix.net/)를 열어서, 기본 샘플 네트워크를 가져옵니다.
-이전에 플레이그라운드를 사용한 적이 있다면, 브라우저 콘솔에서 `localStorage.clear()` 을 사용해 브라우저 로컬 저장소를 지우십시오. 이제 `product-auction.bna` 파일을 가져와서 deploy 버튼을 클릭합니다.
+이전에 플레이그라운드를 사용한 적이 있다면, 웹브라우저 콘솔에서 `localStorage.clear()` 을 사용해 웹브라우저 로컬 저장소를 지우십시오. 이제 `product-auction.bna` 파일을 가져와서 deploy 버튼을 클릭합니다.
 
 
 **테스트** 탭에서 이 비즈니스 네트워크 정의를 테스트하려면:
@@ -138,7 +138,7 @@ npm test
 }
 ```
 
-이제 **Access Control**을 추가할 준비가 되었습니다. 먼저 `admin` 탭을 클릭하여 참가자에게 **새로운 ID**를 발급하고 ID를 월렛에 추가하십시오. 아래 이미지와 같이 지침을 따르십시오:
+이제 **Access Control**을 추가할 준비가 되었습니다. 먼저 `admin` 탭을 클릭하여 참가자에게 **새로운 ID**를 발급하고, 생성한 ID를 월렛에 추가하십시오. 아래 이미지와 같이 지침을 따르십시오:
 
 *실제로 월렛에 추가하려면 옵션 2에서 +add to my Wallet을 클릭하십시오.
 
@@ -231,7 +231,7 @@ npm test
 
 ![Transaction History](images/transactions.png)
 
-> 또한 모든 `System user`에게 액세스를 허용하려면 `permissions.acl`에 규칙이 있으므로 기본 설정인 `System user`를 사용하여 모든 작업을 수행할 수 있습니다.
+> 또한 모든 `System user`에게 액세스를 허용하려면 `permissions.acl`에 정의된 엑세스 권한 리스트 중 기본 설정인 `System user`를 사용하여 모든 작업을 수행할 수 있습니다.
 
 ## 3. 로컬에 있는 하이퍼레저 컴포저에 비즈니스 네트워크 아카이브 (BNA) 배포하기
 
@@ -257,7 +257,7 @@ The connection to the network was successfully tested: product-auction
 Command succeeded
 ```
 
-REST API를 만들려면 `composer-rest-server`를 시작하여 배포된 비즈니스 네트워크의 접속 정보를 설정합니다.
+REST API를 만들려면 Rest API Server인 `composer-rest-server`를 시작하여 배포된 비즈니스 네트워크의 접속 정보를 설정합니다.
 이제 디렉토리를 제품 경매 폴더로 변경하고 다음을 입력하여 서버를 시작하십시오:
 ```bash
 cd ..
@@ -279,7 +279,7 @@ Web server listening at: http://localhost:3000
 Browse your REST API at http://localhost:3000/explorer
 ```
 
-브라우저를 열어서 http://localhost:3000/explorer 로 이동합니다.
+웹브라우저를 열어서 http://localhost:3000/explorer 로 이동합니다. 정상적으로 composer-rest-server가 구동되었다면, 웹브라우저에 REST API 리스트를 확인 할 수 있습니다.
 
 생성된 REST API를 검사하고 테스트할 수 있도록 LoopBack API Explorer가 표시되어야 합니다. 위의 지시사항에 따라 컴포저 섹션에서 설명한대로 비즈니스 네트워크 정의(Business Network Definition)를 테스트하십시오.
 
