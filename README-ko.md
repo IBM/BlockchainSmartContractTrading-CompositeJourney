@@ -235,7 +235,7 @@ npm test
 
 ## 3. 로컬에 있는 하이퍼레저 컴포저에 비즈니스 네트워크 아카이브 (BNA) 배포하기
 
-[instructions](https://github.com/IBM/BlockchainNetwork-CompositeJourney#2-starting-hyperledger-fabric)을 따라 로컬 패브릭을 시작하십시오. 이제 디렉토리를 `product-auction.bna`파일이 들어있는 `dist`폴더로 변경하고 다음을 입력하십시오:
+[하이퍼레저 패브릭 시작하기](https://github.com/IBM/BlockchainNetwork-CompositeJourney/blob/master/README-ko.md#2-%ED%95%98%EC%9D%B4%ED%8D%BC%EB%A0%88%EC%A0%80-%ED%8C%A8%EB%B8%8C%EB%A6%AD-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0)가이드를 따라 로컬 패브릭을 시작하십시오. 이제 디렉토리를 `product-auction.bna`파일이 들어있는 `dist`폴더로 변경하고 다음을 입력하십시오:
 ```
 cd dist
 composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName product-auction
