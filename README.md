@@ -2,7 +2,7 @@
 
 *Read this in other languages: [한국어](README-ko.md).*
 
-Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network). This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.
+Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network).  You should have installed the Hyperledger Composer Devlopment Tools, and Started the Hyperledger Fabric network. This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.  This Pattern has been updated and successfully tested and runs on Hyperledger Composer V0.19.0, Hyperledger Fabric V1.1.
 
 
 This business network defines:
@@ -34,7 +34,7 @@ ACL rules are present in `permissions.acl` file to determine which user/role is 
 * Docker
 
 ## Application Workflow Diagram
-![Application Workflow](images/GettingStartedWComposer-arch-diagram.png)
+![Application Workflow](images/arch-smart-contract.png)
 
 Creating multiple participants and adding ACL
 * Adding additional participants
@@ -141,16 +141,13 @@ In the `Member` participant registry, create two participants. Again, click on t
 }
 ```
 
-Now we are ready to add **Access Control**. Do this by first clicking on the `admin` tab to issue **new ids** to the participants and add the ids to the wallet.
+Now we are ready to add **Access Control**. Do this by first clicking on the `admin` tab to issue **new ids** to the participants.  Note: the ids are automatically added to the wallet.
 Please follow the instructions as shown in the images below:
 
-* Click +add to my Wallet under Option 2 to actually add to your wallet.
 
-![Admin Tab](images/admintab.png)
+![Admin Tab](images/IssueIDScreen.png)
 
 ![Generate New Id](images/generateNewId.png)
-
-![Add to Wallet](images/addtowallet.png)
 
 ![Ids to Wallet](images/idstowallet.png)
 
@@ -184,7 +181,12 @@ A listing has been created in `ProductListing` registry for the product with `FO
 
 Now Member participants can submit `Offer` transactions to bid on a product listing.
 
-For each `member id`, select the user id from the `Wallet tab`. To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button.
+For each `member id`, select the user id from the tab on the upper right hand-side that probably says `Seller` at the moment. Select MemberA on the left hand side and then `use now` as is demostrated in the graphic below.
+
+![Select member](images/select-member.png)
+
+
+To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button.
 > `ListingID` is the id of the listing copied from the `ProductListing` registry.
 
 ```
@@ -242,8 +244,9 @@ Please start the local Fabric using the [instructions](https://github.com/IBM/Bl
 Now change directory to the `dist` folder containing `product-auction.bna` file and type:
 ```
 cd dist
-composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName product-auction
-composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile product-auction.bna --file networkadmin.card
+composer network install --card PeerAdmin@hlfv1 --archiveFile product-auction.bna
+
+composer network start --networkName product-auction --networkVersion 0.0.1  --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card 
 composer card import --file networkadmin.card
 ```
 
@@ -255,8 +258,9 @@ composer network ping --card admin@product-auction
 You should see the the output as follows:
 ```
 The connection to the network was successfully tested: product-auction
-	version: 0.16.0
+	version: 0.19.0
 	participant: org.hyperledger.composer.system.NetworkAdmin#admin
+  identity: org.hyperledger.composer.system.Identity#6424cb78d96d733e78ebc42fbba95c7113a311b10e8389a55993b9f5f319c410
 
 Command succeeded
 ```
@@ -292,7 +296,6 @@ Congratulations - you have completed Step 2 of this Composite Journey - move ont
 
 ## Additional Resources
 * [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
-* [Hyperledger Composer Docs](https://hyperledger.github.io/composer/introduction/introduction.html)
 
 ## License
 [Apache 2.0](LICENSE)
