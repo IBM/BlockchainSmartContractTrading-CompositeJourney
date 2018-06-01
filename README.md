@@ -161,18 +161,20 @@ Now click on `Submit Transaction` button and select `AddProduct` transaction fro
 ```
 {
   "$class": "org.acme.product.auction.AddProduct",
+	"productId": "p1",
   "description": "Sample Product",
   "owner": "resource:org.acme.product.auction.Seller#auction@acme.org"
 }
 ```
 You can verify the transaction by checking the product and seller registry.
 
-To create a product listing for the above product, copy the `ProductID` from the product registry. Then submit `StartBidding` transaction. Remember to replace `<ProductID>` with the product id you just copied.
+To create a product listing for the above product, submit `StartBidding` transaction.
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
+	"listingId": "l1",
   "reservePrice": 50,
-  "product": "resource:org.acme.product.auction.Product#<ProductID>"
+  "product": "resource:org.acme.product.auction.Product#p1"
 }
 ```
 
@@ -181,19 +183,18 @@ A listing has been created in `ProductListing` registry for the product with `FO
 
 Now Member participants can submit `Offer` transactions to bid on a product listing.
 
-For each `member id`, select the user id from the tab on the upper right hand-side that probably says `Seller` at the moment. Select MemberA on the left hand side and then `use now` as is demostrated in the graphic below.
+For each `member id`, select the user id from the tab on the upper right hand-side that probably says `Seller` at the moment. Select MemberA on the left hand side and then `use now` as is demonstrated in the graphic below.
 
 ![Select member](images/select-member.png)
 
 
 To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button.
-> `ListingID` is the id of the listing copied from the `ProductListing` registry.
 
 ```
 {
   "$class": "org.acme.product.auction.Offer",
   "bidPrice": 50,
-  "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>",
+  "listing": "resource:org.acme.product.auction.ProductListing#l1",
   "member": "resource:org.acme.product.auction.Member#memberA@acme.org"
 }
 ```
@@ -202,7 +203,7 @@ To submit an `Offer` transaction select the `test tab` and click on `Submit Tran
 {
   "$class": "org.acme.product.auction.Offer",
   "bidPrice": 100,
-  "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>",
+  "listing": "resource:org.acme.product.auction.ProductListing#l1",
   "member": "resource:org.acme.product.auction.Member#memberB@acme.org"
 }
 ```
@@ -216,7 +217,7 @@ Now again select the `seller id` from the `Wallet tab` tab. Click on `test tab` 
 ```
 {
   "$class": "org.acme.product.auction.CloseBidding",
-  "listing": "resource:org.acme.product.auction.ProductListing#<ListingID>"
+  "listing": "resource:org.acme.product.auction.ProductListing#l1"
 }
 ```
 
@@ -224,7 +225,7 @@ This simply indicates that the auction for `ListingID` is now closed, triggering
 
 To check whether the Product is sold you need to click on the `ProductListing` asset registry and check the owner of the product. The highest bid was placed by owner `memberB@acme.org`, so `memberB@acme.org` should be the owner of the product.
 
-You can check the state of the ProductListing with `<ListingID>` is `SOLD`.
+You can check the state of the ProductListing with `l1` is `SOLD`.
 
 ![Product Listing Sold](images/soldlisting.png)
 
@@ -246,7 +247,7 @@ Now change directory to the `dist` folder containing `product-auction.bna` file 
 cd dist
 composer network install --card PeerAdmin@hlfv1 --archiveFile product-auction.bna
 
-composer network start --networkName product-auction --networkVersion 0.0.1  --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card 
+composer network start --networkName product-auction --networkVersion 0.0.1  --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 composer card import --file networkadmin.card
 ```
 
@@ -258,9 +259,9 @@ composer network ping --card admin@product-auction
 You should see the the output as follows:
 ```
 The connection to the network was successfully tested: product-auction
-	version: 0.19.0
+	version: 0.19.5
 	participant: org.hyperledger.composer.system.NetworkAdmin#admin
-  identity: org.hyperledger.composer.system.Identity#6424cb78d96d733e78ebc42fbba95c7113a311b10e8389a55993b9f5f319c410
+  identity: org.hyperledger.composer.system.Identity#5b057b5ed98979e814a2c5792f853f03ec2f6cda378058eb4a4dda390cb86dee
 
 Command succeeded
 ```
