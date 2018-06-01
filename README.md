@@ -161,7 +161,7 @@ Now click on `Submit Transaction` button and select `AddProduct` transaction fro
 ```
 {
   "$class": "org.acme.product.auction.AddProduct",
-	"productId": "p1",
+  "productId": "p1",
   "description": "Sample Product",
   "owner": "resource:org.acme.product.auction.Seller#auction@acme.org"
 }
@@ -172,7 +172,7 @@ To create a product listing for the above product, submit `StartBidding` transac
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
-	"listingId": "l1",
+  "listingId": "l1",
   "reservePrice": 50,
   "product": "resource:org.acme.product.auction.Product#p1"
 }
