@@ -59,12 +59,14 @@ transaction CloseBidding {
   --> ProductListing listing
 }
 
-transaction StartBidding{
+transaction StartBidding {
+  o String listingId
   o Double reservePrice
   --> Product product
 }
 
-transaction AddProduct{
+transaction AddProduct {
+  o String productId
   o String description
   --> Seller owner
 }
