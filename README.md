@@ -33,6 +33,17 @@ ACL rules are present in `permissions.acl` file to determine which user/role is 
 * Hyperledger Composer
 * Docker
 
+## Prerequisites
+We find that Blockchain can be finicky when it comes to installing Node. We want to share this [StackOverflow response](https://stackoverflow.com/questions/49744276/error-cannot-find-module-api-hyperledger-composer) - because many times the errors you see with Composer are derived in having installed either the wrong Node version or took an approach that is not supported by Composer: 
+
+* [Docker](https://www.docker.com/products/overview) - v1.13 or higher
+* [Docker Compose](https://docs.docker.com/compose/overview/) - v1.8 or higher
+* [NPM](https://www.npmjs.com/get-npm) - v5.6.0 or higher
+* [nvm]() - v8.11.3 (use to download and set what node version you are using)
+* [Node.js](https://nodejs.org/en/download/) - node v8.11.3 ** don't install in SUDO mode
+* [Git client](https://git-scm.com/downloads) - v 2.9.x or higher
+* [Python](https://www.python.org/downloads/) - 2.7.x
+
 ## Application Workflow Diagram
 ![Application Workflow](images/arch-smart-contract.png)
 
@@ -101,6 +112,16 @@ You should see the following output :
 Open [Composer Playground](http://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
 If you have previously used Playground, be sure to clear your browser local storage by running `localStorage.clear()` in your browser Console. Now import the `product-auction.bna` file and click on deploy button.
 
+If you don't know how to import, take a [tour of Composer Playground](https://www.youtube.com/watch?time_continue=29&v=JQMh_DQ6wXc)
+
+
+>You can also setup [Composer Playground locally](https://hyperledger.github.io/composer/latest/installing/development-tools.html).
+
+You will see the following:
+<p align="center">
+  <img width="400" height="200" src="images/ComposerPlayground.jpg">
+</p>
+
 
 To test this Business Network Definition in the **Test** tab:
 
@@ -142,21 +163,39 @@ In the `Member` participant registry, create two participants. Again, click on t
 ```
 
 Now we are ready to add **Access Control**. Do this by first clicking on the `admin` tab to issue **new ids** to the participants.  Note: the ids are automatically added to the wallet.
+
+Select Admin-> ID Registry
+You will see the following:
+<p align="center">
+  <img width="400" height="200" src="images/IDRegistry.png">
+</p>
+
 Please follow the instructions as shown in the images below:
 
-
+Click on `Issue New ID` button on upper-right hand side - the follow pop-up will appear:
 ![Admin Tab](images/IssueIDScreen.png)
+
+Enter the information you see in the graphic above.
+
+Enter `Seller` for ID Name. Then enter "org.acme.product.auction.Seller#auction@acme.org" in the participant field. **Note**: there is case-sensitivity wrt the name `Seller`. If you have it capitilized as a participant when you added participants under the `Test` page - you must match it here the way you enter it in the Participant field. Ensure you have checked the `Allow this ID to issue new IDs` checkbox. Select the `Create New` button.
 
 ![Generate New Id](images/generateNewId.png)
 
-![Ids to Wallet](images/idstowallet.png)
+Now issue IDs for MemberA and MemberB (example of issuing ID for MemberA in the graphic below - duplicate process for MemberB). First, again, select `Issue New ID`. Then complete the fields and check the checkbox. Select `Create New`.
 
-Select the `seller id` from `Wallet tab` tab. Now click on the `test tab` to perform `AddProduct` and `StartBidding` transactions.
+
+![MemberA Id to Wallet](images/identityA.png)
+
+Once you complete those steps - your screen should appear as follows:
+
+![Ids to Wallet](images/idtowallet.png)
+
+The Wallet tab is pictured in the image below.  Select the `seller id` from `Wallet tab` tab (as demonstrated in the graphic below). Select the 'use now' button. Note the status of the `Seller` id is now `In Use`. Now click on the `test tab` to perform `AddProduct` and `StartBidding` transactions.
 
 ![Select Id](images/selectid.png)
 
 Now click on `Submit Transaction` button and select `AddProduct` transaction from the dropdown, to create a product for the seller.
-![addproduct](images/addproduct.png)
+![addproduct](images/addproduct1.png)
 
 ```
 {
@@ -168,7 +207,7 @@ Now click on `Submit Transaction` button and select `AddProduct` transaction fro
 ```
 You can verify the transaction by checking the product and seller registry.
 
-To create a product listing for the above product, submit `StartBidding` transaction.
+To create a product listing for the above product, submit `StartBidding` transaction. Again, select `Submit Transaction` button and then select `Start Bidding` transaction from the dropdown.
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
@@ -178,17 +217,21 @@ To create a product listing for the above product, submit `StartBidding` transac
 }
 ```
 
-You've just listed `Sample Product` for auction, with a reserve price of 50!
+You've just listed `Sample Product - P1` for auction, with a reserve price of $50.
 A listing has been created in `ProductListing` registry for the product with `FOR_SALE` state.
 
 Now Member participants can submit `Offer` transactions to bid on a product listing.
 
 For each `member id`, select the user id from the tab on the upper right hand-side that probably says `Seller` at the moment. Select MemberA on the left hand side and then `use now` as is demonstrated in the graphic below.
 
-![Select member](images/select-member.png)
+<p align="center">
+  <img width="400" height="200" src="images/select-member.png">
+</p>
 
 
-To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button.
+To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button. Select `offer` from the drop down.
+
+![make offer](images/offer.png)
 
 ```
 {
@@ -198,6 +241,9 @@ To submit an `Offer` transaction select the `test tab` and click on `Submit Tran
   "member": "resource:org.acme.product.auction.Member#memberA@acme.org"
 }
 ```
+
+
+Repeat the process for MemberB. Remember to select 'use now' for `memberB` in the registry similar to what you did for `memberA`.
 
 ```
 {
@@ -212,7 +258,9 @@ You can check the `ProductListing` registry, to view all the bids for the produc
 
 ![Product Offers](images/productoffers.png)
 
-Now again select the `seller id` from the `Wallet tab` tab. Click on `test tab` to end the auction by submitting a `CloseBidding` transaction for the listing.
+Now again select the `seller id` from the `Wallet tab` tab. Set it to `use now`. Click on `test tab` and then end the auction by submitting a `CloseBidding` transaction for the listing.
+
+![Close Bid](images/closebid.png)
 
 ```
 {
@@ -225,11 +273,11 @@ This simply indicates that the auction for `ListingID` is now closed, triggering
 
 To check whether the Product is sold you need to click on the `ProductListing` asset registry and check the owner of the product. The highest bid was placed by owner `memberB@acme.org`, so `memberB@acme.org` should be the owner of the product.
 
-You can check the state of the ProductListing with `l1` is `SOLD`.
+You can check the state of the ProductListing with `P1` is `SOLD`.
 
 ![Product Listing Sold](images/soldlisting.png)
 
-Click on the `Member` asset registry to verify the updated balance for buyer and seller. The product is added to the product list of the buyer `memberB@acme.org`.
+Click on the `Member` asset registry to verify the updated balance for buyer and seller. The product is added to the product list of the buyer `memberB@acme.org`. Note the balance of MemberB is $900.
 
 ![New Owner of Product](images/newowner.png)
 
