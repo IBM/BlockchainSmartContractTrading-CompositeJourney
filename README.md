@@ -173,6 +173,7 @@ You will see the following:
 Please follow the instructions as shown in the images below:
 
 Click on `Issue New ID` button on upper-right hand side - the follow pop-up will appear:
+
 ![Admin Tab](images/IssueIDScreen.png)
 
 Enter the information you see in the graphic above.
@@ -184,7 +185,7 @@ Enter `Seller` for ID Name. Then enter "org.acme.product.auction.Seller#auction@
 Now issue IDs for MemberA and MemberB (example of issuing ID for MemberA in the graphic below - duplicate process for MemberB). First, again, select `Issue New ID`. Then complete the fields and check the checkbox. Select `Create New`.
 
 
-![MemberA Id to Wallet](images/identityA.png)
+![MemberA Id to Wallet](images/IdentityA.png)
 
 Once you complete those steps - your screen should appear as follows:
 
@@ -195,7 +196,10 @@ The Wallet tab is pictured in the image below.  Select the `seller id` from `Wal
 ![Select Id](images/selectid.png)
 
 Now click on `Submit Transaction` button and select `AddProduct` transaction from the dropdown, to create a product for the seller.
-![addproduct](images/addproduct1.png)
+
+<p align="center">
+  <img width="400" height="200" src="images/addproduct1.png">
+</p>
 
 ```
 {
@@ -226,9 +230,7 @@ Now Member participants can submit `Offer` transactions to bid on a product list
 
 For each `member id`, select the user id from the tab on the upper right hand-side that probably says `Seller` at the moment. Select MemberA on the left hand side and then `use now` as is demonstrated in the graphic below.
 
-<p align="center">
-  <img width="400" height="200" src="images/select-member.png">
-</p>
+![Select Id](images/select-member.png)
 
 
 To submit an `Offer` transaction select the `test tab` and click on `Submit Transaction` button. Select `offer` from the drop down.
