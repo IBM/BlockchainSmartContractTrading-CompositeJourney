@@ -207,7 +207,9 @@ Now click on `Submit Transaction` button and select `AddProduct` transaction fro
 ```
 You can verify the transaction by checking the product and seller registry.
 
+
 To create a product listing for the above product, submit `StartBidding` transaction. Again, select `Submit Transaction` button and then select `Start Bidding` transaction from the dropdown.
+
 ```
 {
   "$class": "org.acme.product.auction.StartBidding",
@@ -273,7 +275,8 @@ This simply indicates that the auction for `ListingID` is now closed, triggering
 
 To check whether the Product is sold you need to click on the `ProductListing` asset registry and check the owner of the product. The highest bid was placed by owner `memberB@acme.org`, so `memberB@acme.org` should be the owner of the product.
 
-You can check the state of the ProductListing with `P1` is `SOLD`.
+You can check the state of the ProductListing with `l1` is `SOLD`.
+
 
 ![Product Listing Sold](images/soldlisting.png)
 
