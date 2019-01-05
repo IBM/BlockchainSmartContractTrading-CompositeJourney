@@ -1,8 +1,14 @@
+# DISCLAIMER:
+
+> As of August 2018, IBM will not be contributing new features to Hyperledger Composer and will only be maintaining it through Fabric 2.x releases.  IBM recommends using Hyperledger Composer solely for demos and proof-of-concepts. IBM does not provide support for networks using Hyperledger Composer in production (this includes the CLI, JavaScript APIs, REST server, and Web Playground).
+
+> This pattern has been upgraded to Fabric V2.0
+
 # Hyperledger Composer - Product Auction Network
 
 *Read this in other languages: [한국어](README-ko.md),[中国](README-cn.md).*
 
-Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network).  You should have installed the Hyperledger Composer Devlopment Tools, and Started the Hyperledger Fabric network. This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.  This Pattern has been updated and successfully tested and runs on Hyperledger Composer V0.19.0, Hyperledger Fabric V1.1.
+Welcome to Part 2 of the Hyperledger Composer Composite Journey. This is a continuation of [Composer Network Setup journey](https://github.com/IBM/BlockchainNetwork-CompositeJourney#build-your-first-hyperledger-network).  You should have installed the Hyperledger Composer Devlopment Tools, and Started the Hyperledger Fabric network. This journey introduces more complexity in using Composer to define your smart contract. You will learn how to add multiple participants and add access control to your blockchain application. To do that - you will create an interactive, distributed, product auction demo network. You will list assets for sale (setting a reserve price) and watch as assets that have met their reserve price are automatically transferred to the highest bidder at the end of the auction. Also each participant will have different level of access permissions depending on the Access Control Rules (ACL) in `permissions.acl` file. Access Control Lists (ACL) are the settings for sharing and privacy, which are automatically enforced by the Fabric Composer runtime.  This Pattern has been updated and successfully tested and runs on Hyperledger Composer V0.20.5, Hyperledger Fabric V1.2.
 
 
 This business network defines:
@@ -29,9 +35,9 @@ The `closeBidding` function is called when a `CloseBidding` transaction is submi
 ACL rules are present in `permissions.acl` file to determine which user/role is permitted to create, read, update or delete an element in the business network's domain model. The default `System` user has all the permissions. Members of the network have read access to all the resources and the seller can create a product, start and close the bidding for their products. Members of the network can make their bid for the product listing. Participants can access only permitted resources and transactions.
 
 ## Included Components
-* Hyperledger Fabric
-* Hyperledger Composer
-* Docker
+* Hyperledger Fabric v1.2
+* Hyperledger Composer v20.5
+* Docker v1.13
 
 ## Prerequisites
 We find that Blockchain can be finicky when it comes to installing Node. We want to share this [StackOverflow response](https://stackoverflow.com/questions/49744276/error-cannot-find-module-api-hyperledger-composer) - because many times the errors you see with Composer are derived in having installed either the wrong Node version or took an approach that is not supported by Composer: 
