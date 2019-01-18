@@ -40,9 +40,9 @@ ACL rules are present in `permissions.acl` file to determine which user/role is 
 * Docker v1.13
 
 ## Prerequisites
-We find that Blockchain can be finicky when it comes to installing Node. We want to share this [StackOverflow response](https://stackoverflow.com/questions/49744276/error-cannot-find-module-api-hyperledger-composer) - because many times the errors you see with Composer are derived in having installed either the wrong Node version or took an approach that is not supported by Composer: 
+We find that Blockchain can be finicky when it comes to installing Node. We want to share this [StackOverflow response](https://stackoverflow.com/questions/49744276/error-cannot-find-module-api-hyperledger-composer) - because many times the errors you see with Composer are derived in having installed either the wrong Node version or took an approach that is not supported by Composer:
 
-* [Docker](https://www.docker.com/products/overview) - v1.13 or higher
+* [Docker](https://www.docker.com/products) - v1.13 or higher
 * [Docker Compose](https://docs.docker.com/compose/overview/) - v1.8 or higher
 * [NPM](https://www.npmjs.com/get-npm) - v5.6.0 or higher
 * [nvm]() - v8.11.3 (use to download and set what node version you are using)
@@ -115,7 +115,7 @@ You should see the following output :
 
 ## 2. Deploy the Business Network Archive using Composer Playground
 
-Open [Composer Playground](http://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
+Open [Composer Playground](https://composer-playground.mybluemix.net/), by default the Basic Sample Network is imported.
 If you have previously used Playground, be sure to clear your browser local storage by running `localStorage.clear()` in your browser Console. Now import the `product-auction.bna` file and click on deploy button.
 
 If you don't know how to import, take a [tour of Composer Playground](https://www.youtube.com/watch?time_continue=29&v=JQMh_DQ6wXc)
@@ -355,10 +355,10 @@ You should see the LoopBack API Explorer, allowing you to inspect and test the g
 Congratulations - you have completed Step 2 of this Composite Journey - move onto [Step 3](https://github.com/IBM/BlockchainEvents-CompositeJourney).
 
 ## Additional Resources
-* [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
+* [Hyperledger Fabric Docs](https://hyperledger-fabric.readthedocs.io/en/latest/)
 
 ## License
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+[Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
 
