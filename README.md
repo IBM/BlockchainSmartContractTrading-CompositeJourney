@@ -1,3 +1,7 @@
+# WARNING: This repository is no longer maintained :warning:
+
+> The [Create and execute blockchain smart contracts](https://developer.ibm.com/patterns/create-and-execute-blockchain-smart-contracts/) from IBM Cloud has been sunset. This repository will not be updated. The repository will be kept available in read-only mode. Refer to https://github.com/IBM/SmartContractTrading-wFabric1-4-VSCodeExt for a similar example.
+
 # DISCLAIMER:
 
 > As of August 2018, IBM will not be contributing new features to Hyperledger Composer and will only be maintaining it through Fabric 2.x releases.  IBM recommends using Hyperledger Composer solely for demos and proof-of-concepts. IBM does not provide support for networks using Hyperledger Composer in production (this includes the CLI, JavaScript APIs, REST server, and Web Playground).
